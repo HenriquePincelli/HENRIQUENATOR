@@ -1,11 +1,11 @@
+from RPA_APP.rpa.services import Service
 from RPA_APP.rpa.screens import Screens, AljazeeraScreensService
-import json
-import sys
 
 
 # >>>>>>>>>INITIALIZE SERVICES>>>>>>>>>
-service_screen = AljazeeraScreensService()
+service_rpa = Service()
 service = Screens()
+service_screen = AljazeeraScreensService()
 #  <<<<<<<<<INITIALIZE SERVICES<<<<<<<<<
 
 # >>>>>>>>>Destiny directory for news images>>>>>>>>>
@@ -51,17 +51,5 @@ class RPAAljazeera:
 
             return {"status": True, "msg": f"News extracted and sent to email."}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return service_rpa.trace_error(e)

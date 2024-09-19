@@ -3,8 +3,6 @@ from botcity.web import By
 from time import sleep
 from openpyxl import Workbook
 from openpyxl.styles import Border, Side, Font, PatternFill, Alignment
-import json
-import sys
 
 
 class FundamentusService(Service):
@@ -27,20 +25,8 @@ class FundamentusService(Service):
                 "data": papers
             }
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            # print("=-==-==-=ERROR=-==-==-=")
-            # print(traceback_details)
-            # print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details), "bot": bot}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to extract all data from Aljazeera website<<<<<<<<<
 
     # >>>>>>>>>Make a excel file with fundamentus data>>>>>>>>>
@@ -115,18 +101,6 @@ class FundamentusService(Service):
             wb.save(f"{directory}{excel_filename}")
             return {"status": True}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return self.trace_error(e)
     # <<<<<<<<<Make a excel file with fundamentus data<<<<<<<<<

@@ -1,4 +1,5 @@
 from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
+from RPA_APP.rpa.services import Service
 from RPA_APP.config import SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
@@ -9,9 +10,10 @@ import smtplib
 import openpyxl
 import os
 import re
-import sys
-import json
 import pytz
+
+
+service_rpa = Service()
 
 
 # >>>>>>>>>Money patterns for regex>>>>>>>>>
@@ -118,20 +120,8 @@ class Screens():
 
             return {"status": True}
         except Exception as e:
-            # >>>>>>>>>Tracing the error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                "filename": exc_traceback.tb_frame.f_code.co_filename,
-                "line_number": exc_traceback.tb_lineno,
-                "function_name": exc_traceback.tb_frame.f_code.co_name,
-                "exception_type": exc_type.__name__,
-                "exception_message": str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return service_rpa.trace_error(e)
     # <<<<<<<<<Combine data creation and excel file generation into one function<<<<<<<<<
 
     # >>>>>>>>>Send aljazeera excel by email>>>>>>>>>
@@ -173,18 +163,6 @@ class Screens():
             # <<<<<<<<<Send email<<<<<<<<<
             return {"status": True}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                "filename": exc_traceback.tb_frame.f_code.co_filename,
-                "line_number": exc_traceback.tb_lineno,
-                "function_name": exc_traceback.tb_frame.f_code.co_name,
-                "exception_type": exc_type.__name__,
-                "exception_message": str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return service_rpa.trace_error(e)
     # <<<<<<<<<Send aljazeera excel by email<<<<<<<<<

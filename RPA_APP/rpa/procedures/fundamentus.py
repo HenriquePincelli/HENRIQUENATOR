@@ -1,10 +1,9 @@
 from RPA_APP.rpa.screens import Screens, FundamentusScreensService
-from RPA_APP.rpa.services import FundamentusService
-import json
-import sys
+from RPA_APP.rpa.services import Service, FundamentusService
 
 
 # >>>>>>>>>INITIALIZE SERVICES>>>>>>>>>
+service_rpa = Service()
 service = Screens()
 service_screen = FundamentusScreensService()
 service_fundamentus = FundamentusService()
@@ -52,17 +51,5 @@ class RPAFundamentus:
 
             return {"status": True, "msg": f"Data extracted and sent to email."}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return service_rpa.trace_error(e)

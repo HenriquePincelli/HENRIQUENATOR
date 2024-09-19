@@ -1,8 +1,10 @@
+from RPA_APP.rpa.services import Service
 from RPA_APP.rpa.procedures import RPAAljazeera
 from RPA_APP.config import EMAIL, ALJAZEERA_SEARCH_PHRASE, ALJAZEERA_SHOW_MORE
 from robocorp.tasks import task
-import sys
-import json
+
+
+service_rpa = Service()
 
 
 @task
@@ -26,19 +28,7 @@ def bot_aljazeera():
         # <<<<<<<<<RPA's Procedure<<<<<<<<<
         # <<<<<<<<<Aljazeera's RPA<<<<<<<<<
     except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            print({"status": False, "msg": json.dumps(traceback_details)})
+        # Tracing the Error
+        return service_rpa.trace_error(e)
     finally:
         print("BOT-Aljazeera finished!!!")

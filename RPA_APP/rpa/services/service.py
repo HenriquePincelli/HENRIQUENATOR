@@ -17,26 +17,27 @@ class Service():
         self.driver_path = ChromeDriverManager().install()
         # <<<<<<<<<Bot Configurations<<<<<<<<<
 
+    # >>>>>>>>>Handle with any exceptions>>>>>>>>>
+    def trace_error(self, exception=None, bot=None):
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback_details = {
+            'filename': exc_traceback.tb_frame.f_code.co_filename,
+            'line_number': exc_traceback.tb_lineno,
+            'function_name': exc_traceback.tb_frame.f_code.co_name,
+            'exception_type': exc_type.__name__,
+            'exception_message': str(exc_value)
+        }
+        return {"status": False, "msg": json.dumps(traceback_details), "bot": bot}
+    # <<<<<<<<<Handle with any exceptions<<<<<<<<<
+
     # >>>>>>>>>Function to paste "text" in a input field>>>>>>>>>
     def paste(self, bot, text):
         try:
             bot.paste(text)
             return {"status": True, "bot": bot}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to paste "text" in a input field<<<<<<<<<
 
     # >>>>>>>>>Function to type "Enter" key>>>>>>>>>
@@ -45,20 +46,8 @@ class Service():
             bot.enter()
             return {"status": True, "bot": bot}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            # print("=-==-==-=ERROR=-==-==-=")
-            # print(traceback_details)
-            # print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to type "Enter" key<<<<<<<<<
 
     # >>>>>>>>>Function to press "type up" key>>>>>>>>>
@@ -67,20 +56,8 @@ class Service():
             bot.type_up()
             return {"status": True, "bot": bot}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            # print("=-==-==-=ERROR=-==-==-=")
-            # print(traceback_details)
-            # print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to press "type up" key<<<<<<<<<
 
     # >>>>>>>>>Function to start bot>>>>>>>>>
@@ -100,20 +77,8 @@ class Service():
             return {"status": True, "bot": bot}
             # <<<<<<<<<Open Browser<<<<<<<<<
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            # print("=-==-==-=ERROR=-==-==-=")
-            # print(traceback_details)
-            # print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to start bot<<<<<<<<<
 
     # >>>>>>>>>Function to click on elements by xpath>>>>>>>>>
@@ -151,20 +116,8 @@ class Service():
             # <<<<<<<<<Loop to maximize bot execution time<<<<<<<<<
             return {"status": True, "bot": bot}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            # print("=-==-==-=ERROR=-==-==-=")
-            # print(traceback_details)
-            # print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details), "bot": bot}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to click on elements by xpath<<<<<<<<<
 
     # >>>>>>>>>Function to click on elements by id>>>>>>>>>
@@ -199,18 +152,6 @@ class Service():
             # <<<<<<<<<Loop to maximize bot execution time<<<<<<<<<
             return {"status": True, "bot": bot}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            # print("=-==-==-=ERROR=-==-==-=")
-            # print(traceback_details)
-            # print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details), "bot": bot}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to click on elements by id<<<<<<<<<

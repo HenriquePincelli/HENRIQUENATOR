@@ -1,8 +1,6 @@
 from RPA_APP.rpa.services.service import Service
 from botcity.web import By
 from time import sleep
-import json
-import sys
 
 
 class AljazeeraService(Service):
@@ -33,18 +31,6 @@ class AljazeeraService(Service):
                 "data": news
             }
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            # print("=-==-==-=ERROR=-==-==-=")
-            # print(traceback_details)
-            # print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details), "bot": bot}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Function to extract all data from Aljazeera website<<<<<<<<<

@@ -1,8 +1,6 @@
 from RPA_APP.rpa.services import Service, AljazeeraService
 from botcity.web import By
 from time import sleep
-import json
-import sys
 
 
 service = AljazeeraService()
@@ -32,20 +30,8 @@ class AljazeeraScreensService(Service):
             return {"status": True, "data": bot["data"]}
             # <<<<<<<<<Close bot process and return success<<<<<<<<<
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details)}
+            # Tracing the Error
+            return self.trace_error(e)
     # <<<<<<<<<Aljazeera RPA logic<<<<<<<<<
 
     # >>>>>>>>>Extract newest data from "https://www.aljazeera.com/">>>>>>>>>
@@ -100,18 +86,6 @@ class AljazeeraScreensService(Service):
 
             return {"status": True, "bot": bot["bot"], "data": bot["data"]}
         except Exception as e:
-            # >>>>>>>>>Tracing the Error>>>>>>>>>
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback_details = {
-                'filename': exc_traceback.tb_frame.f_code.co_filename,
-                'line_number': exc_traceback.tb_lineno,
-                'function_name': exc_traceback.tb_frame.f_code.co_name,
-                'exception_type': exc_type.__name__,
-                'exception_message': str(exc_value)
-            }
-            print("=-==-==-=ERROR=-==-==-=")
-            print(traceback_details)
-            print("=-==-==-=ERROR=-==-==-=")
-            # <<<<<<<<<Tracing the Error<<<<<<<<<
-            return {"status": False, "msg": json.dumps(traceback_details), "bot": bot}
+            # Tracing the Error
+            return self.trace_error(e, bot)
     # <<<<<<<<<Extract newest data from "https://www.aljazeera.com/"<<<<<<<<<
